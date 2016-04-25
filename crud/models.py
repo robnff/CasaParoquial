@@ -16,10 +16,10 @@ class Membro (models.Model):
 	listaGenero = (('mas','masculino'),('fem','feminino'),('out', 'outro'))
 	listaEscolar = (('fund','fundamental completo'),('medio', 'medio completo'),('super','superior completo'))
 
-	escolaridade = models.CharField(max_length=5, choices=listaGenero)
+	#escolaridade = models.CharField(max_length=5, choices=listaGenero)
 	batizado = models.BooleanField(choices=((True,'Sim'),(False,'Nao')))
-	#data_casamento = 
-	#conjuge =
+	data_casamento = models.DateField()
+	conjuge = models.CharField(max_length=50)
 	profissao = models.CharField(max_length=50)
 	#origem =
 	pai = models.CharField(max_length=50)
@@ -53,7 +53,7 @@ class Evento(models.Model):
 	inicio = models.DateTimeField()
 	fim = models.DateTimeField()
 	#periodicidade =
-	#ser_divulgado =
+	ser_divulgado = models.BooleanField()
 	responsavel = models.ForeignKey(Membro, related_name='responsavel')
 	secretario = models.ForeignKey(Secretario, related_name='marcou')
 
@@ -68,5 +68,6 @@ class Aconselhamento(models.Model):
 class Pertence_ministerio(models.Model):
 	ministerio = models.CharField(max_length=50)
 	pertencente = models.ForeignKey(Membro, related_name='cargo')
+	#fez, trabalha ou lidera
 	funcao = models.CharField(max_length=50)
 
