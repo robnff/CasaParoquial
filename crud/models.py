@@ -32,7 +32,7 @@ class Membro (models.Model):
 	endereco = models.ForeignKey(Endereco, related_name='endereco')
 	
 
-class Telefones(models.Model):
+class Telefone(models.Model):
 	numero = models.CharField(max_length=15)
 	dono = models.ForeignKey(Membro, related_name='dono')
 
@@ -60,7 +60,7 @@ class Evento(models.Model):
 class Aconselhamento(models.Model):
 	inicio = models.DateTimeField()
 	fim = models.DateTimeField()
-	sala = models.IntegerField([1,2,3,4,5])
+	sala = models.IntegerField(choices=((1,'sala 1'),(2, 'sala 2'),(3, 'sala 3'),(4, 'sala 4'),(5, 'sala 5')))
 	secretario = models.ForeignKey(Secretario, related_name='agendou')
 	lider = models.ForeignKey(Lider_religioso, related_name='lider_religioso')
 	aconselhado = models.ForeignKey(Membro, related_name='aconselhado')
