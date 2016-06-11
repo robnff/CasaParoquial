@@ -1,0 +1,10 @@
+{% extends "index.html" %}
+{% block css %}
+  {% load static %}
+  <link href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+{% endblock %}
+{% block cadastro %}
+<script>
+    alert('{{ message }}');
+</script>
+{%endblock%}

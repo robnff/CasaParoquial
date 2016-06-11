@@ -1,0 +1,121 @@
+{% extends "index.html" %}
+{% block css %}
+  {% load static %}
+  <link href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+{% endblock %}
+{% block cadastro %}
+
+<!--formden.js communicates with FormDen server to validate fields and submit via AJAX -->
+<script type="text/javascript" src="https://formden.com/static/cdn/formden.js"></script>
+
+<!-- Special version of Bootstrap that is isolated to content wrapped in .bootstrap-iso -->
+<link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
+
+<!-- Inline CSS based on choices in "Settings" tab -->
+<style>.bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form{font-family: Arial, Helvetica, sans-serif; color: black}.bootstrap-iso form button, .bootstrap-iso form button:hover{color: white !important;} .asteriskField{color: red;}</style>
+
+<!-- HTML Form (wrapped in a .bootstrap-iso div) -->
+<div class="bootstrap-iso">
+ <div class="container-fluid">
+  <div class="row">
+   <div class="col-md-6 col-sm-6 col-xs-12">
+    <form method="post">
+       	{% csrf_token %}
+     <div class="form-group ">
+      <label class="control-label " for="local">
+       Local
+      </label>
+      <select class="select form-control" id="local" name="local">
+       <option value="outros">
+        Outros
+       </option>
+       <option value="canaa">
+        Cana&atilde;
+       </option>
+       <option value="betania">
+        Catedral Bet&acirc;nia
+       </option>
+      </select>
+      <span class="help-block" id="hint_select">
+      </span>
+     </div>
+     <div class="form-group ">
+      <label class="control-label " for="titulo">
+       Titulo
+      </label>
+      <input class="form-control" id="titulo" name="titulo" type="text"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label " for="inicio">
+       Inicio
+      </label>
+      <input class="form-control" id="inicio" name="inicio" placeholder="MM/DD/YYYY HH:MM:SS" type="datetime-local"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label " for="fim">
+       Fim
+      </label>
+      <input class="form-control" id="datfime1" name="fim" placeholder="MM/DD/YYYY HH:MM:SS" type="datetime-local"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label " for="periodicidade">
+       Periodicidade
+      </label>
+      <select class="select form-control" id="peridiocidade" name="peridiocidade">
+       <option value="uma">
+        Uma vez
+       </option>
+       <option value="semanalmente">
+        Semanalmente
+       </option>
+       <option value="quinzenal">
+        Quinzenal
+       </option>
+       <option value="mensal">
+        Mensal
+       </option>
+      </select>
+     </div>
+     <div class="form-group ">
+      <div class=" ">
+       <div class="checkbox">
+        <label class="checkbox">
+         <input name="checkbox" type="checkbox" value="divulgado"/>
+         Ser divulgado
+        </label>
+       </div>
+      </div>
+     </div>
+     <div class="form-group ">
+      <label class="control-label " for="responsavel">
+       Responsavel
+      </label>
+      <select class="select form-control" id="responsavel" name="responsavel">
+            {% for entry in membros %}
+                <option value="{{ entry.id }}">{{ entry.nome_comp }}</option>
+            {% endfor %}
+      </select>
+     </div>
+     <div class="form-group ">
+      <label class="control-label " for="secretario">
+       Secretario
+      </label>
+ <select class="select form-control" id="secretario" name="secretario">
+            {% for entry in secretarios %}
+                <option value="{{ entry.id }}">{{ entry.nome }}</option>
+            {% endfor %}
+      </select>     </div>
+     <div class="form-group">
+      <div>
+       <input name="_honey" style="display:none" type="text"/>
+       <button class="btn btn-primary " name="submit" type="submit">
+        Cadastrar
+       </button>
+      </div>
+     </div>
+    </form>
+   </div>
+  </div>
+ </div>
+</div>
+{%endblock%}
