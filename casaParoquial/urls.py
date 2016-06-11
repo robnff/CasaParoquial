@@ -15,7 +15,18 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-
+from crud import views
 urlpatterns = [
+    url(r'^$', views.home),
+    url(r'^cadastrar_evento/$', views.cadastrar_evento),
+    url(r'^cadastrar_membro/$', views.cadastrar_membro),
+    url(r'^consultar_membro/$', views.consulta_membro),
+    url(r'^consultar_evento/$', views.consultar_evento),
+    url(r'^consultar_aconselhamento/$', views.consultar_aconselhamento),
+    url(r'^cadastrar_aconselhamento/$', views.cadastrar_aconselhamento),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^email/$', views.envia_email),
+    url(r'^criandouser1/$', views.login_user1),
+    url(r'^criandouser2/$', views.login_user2),
+
 ]
