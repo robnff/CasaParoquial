@@ -63,6 +63,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
                 ('batizado', models.BooleanField(choices=[(True, 'Sim'), (False, 'Nao')])),
+                ('origem', models.CharField(choices=[('cursilho','cursilho'),('lado','lado a lado'),('discipulado','discipulado'),('transf','transf outra comunidade'),('olimp','olimpiadas'),('outros','outros')], max_length=6)),
                 ('data_casamento', models.DateField()),
                 ('conjuge', models.CharField(max_length=50)),
                 ('profissao', models.CharField(max_length=50)),
@@ -80,8 +81,8 @@ class Migration(migrations.Migration):
             name='Pertence_ministerio',
             fields=[
                 ('id', models.AutoField(serialize=False, auto_created=True, primary_key=True, verbose_name='ID')),
-                ('ministerio', models.CharField(max_length=50)),
-                ('funcao', models.CharField(max_length=50)),
+                ('ministerio', models.IntegerField(verbose_name=[1, 2, 3,4,5])),
+                ('funcao', models.IntegerField(verbose_name=[1, 2, 3])),
                 ('pertencente', models.ForeignKey(related_name='cargo', to='crud.Membro')),
             ],
         ),
