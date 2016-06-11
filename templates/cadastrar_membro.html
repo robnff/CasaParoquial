@@ -1,0 +1,220 @@
+{% extends "index.html" %}
+{% block css %}
+  {% load static %}
+  <link href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+{% endblock %}
+{% block cadastro %}
+<!--<form method='POST'>
+	{% csrf_token %}
+		<label for='nome' >Name</label><input id='nome' name='nome' type='text'/><br/>
+		<label for='num_proc' >Process Number</label><input id='num_proc'name='num_proc' type = 'text'/><br/>
+		<label for='periodo' >Limit date</label><input id='periodo'name='periodo' type = 'date'/><br/>
+		<label for='cidade' >City</label><input id='cidade'name='cidade' type = 'text'/><br/>
+		<label for='senha' >Password</label><input id='senha'name='senha' type = 'password'/><br/>
+		
+		<input type='submit'/>
+	</form>-->
+  
+  <!-- Special version of Bootstrap that only affects content wrapped in .bootstrap-iso -->
+<link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" /> 
+
+<!-- Inline CSS based on choices in "Settings" tab -->
+<style>.bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form{font-family: Arial, Helvetica, sans-serif; color: black}.bootstrap-iso form button, .bootstrap-iso form button:hover{color: white !important;} .asteriskField{color: red;}</style>
+
+<!-- HTML Form (wrapped in a .bootstrap-iso div) -->
+<div class="bootstrap-iso">
+ <div class="container-fluid">
+  <div class="row">
+   <div class="col-md-6 col-sm-6 col-xs-12">
+    <form method="post">
+      	{% csrf_token %}
+
+     <div class="form-group ">
+      <label class="control-label requiredField" for="nome">
+       Nome Completo
+       <span class="asteriskField">
+        *
+       </span>
+      </label>
+      <input class="form-control" id="nome" name="nome" type="text"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label requiredField" for="data_nascimento">
+       Data de Nascimento
+      </label>
+      <input class="form-control" id="data_nascimento" name="data_nascimento" placeholder="DD/MM/AAAA" type="date"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label requiredField" for="sexo">
+       Sexo
+      </label>
+      <select class="select form-control" id="sexo" name="sexo">
+       <option value="Masculino">
+        Masculino
+       </option>
+       <option value="Feminino">
+        Feminino
+       </option>
+      </select>
+     </div>
+     <div class="form-group ">
+      <label class="control-label " for="origem">
+       Origem
+      </label>
+      <select class="select form-control" id="origem" name="origem">
+       <option value="cursilho">
+        Cursilho
+       </option>
+       <option value="lado">
+        Lado a Lado
+       </option>
+       <option value="discipulado">
+        Discipulado
+       </option>
+       <option value="transf">
+        Transf. outra comunidade
+       </option>
+       <option value="olimp">
+        Olimp&iacute;adas
+       </option>
+       <option value="outros">
+        Outros
+       </option>
+      </select>
+     </div>
+     <div class="form-group ">
+      <label class="control-label requiredField" for="email">
+       Email
+      </label>
+      <input class="form-control" id="email" name="email" type="text"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label " for="profissao">
+       Profissao
+      </label>
+      <input class="form-control" id="profissao" name="profissao" type="text"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label " for="escolaridade">
+       Escolaridade
+      </label>
+      <select class="select form-control" id="escolaridade" name="escolaridade">
+       <option value="sem">
+        N&atilde;o tem
+       </option>
+       <option value="fund">
+        Fundamental
+       </option>
+       <option value="medio">
+        M&eacute;dio
+       </option>
+       <option value="super">
+        Superior
+       </option>
+       <option value="pos">
+        P&oacute;s-graduado
+       </option>
+      </select>
+     </div>
+     <div class="form-group" id="div_batizado">
+      <label class="control-label " for="batizado">
+      </label>
+      <div class=" ">
+       <label class="checkbox-inline">
+        <input name="batizado" type="checkbox" value="batizado"/>
+        Batizado
+       </label>
+      </div>
+     </div>
+     <div class="form-group ">
+      <label class="control-label " for="data_batismo">
+       Data de Batistmo
+      </label>
+      <input class="form-control" id="data_batismo" name="data_batismo" placeholder="DD/MM/AAAA" type="date"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label " for="data_confirmacao">
+       Data de Confirma&ccedil;&atilde;o
+      </label>
+      <input class="form-control" id="data_confirmacao" name="data_confirmacao" placeholder="DD/MM/AAAA" type="date"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label " for="nome_conjuge">
+       Nome do Conjuge
+      </label>
+      <input class="form-control" id="nome_conjuge" name="nome_conjuge" type="text"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label " for="nome_pai">
+       Nome do Pai
+      </label>
+      <input class="form-control" id="nome_pai" name="nome_pai" type="text"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label " for="nome_mae">
+       Nome da m&atilde;e
+      </label>
+      <input class="form-control" id="nome_mae" name="nome_mae" type="text"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label " for="data_casamento">
+       Data de Casamento
+      </label>
+      <input class="form-control" id="data_casamento" name="data_casamento" placeholder="DD/MM/AAAA" type="date"/>
+      
+     </div>
+     <div class="form-group ">
+      <label class="control-label " for="logradouro">
+       Logradouro
+      </label>
+      <input class="form-control" id="logradouro" name="logradouro" type="text"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label " for="bairro">
+       Bairro
+      </label>
+      <input class="form-control" id="bairro" name="bairro" type="text"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label " for="endereco_num">
+       N&uacute;mero
+      </label>
+      <input class="form-control" id="endereco_num" name="endereco_num" type="text"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label " for="cep">
+       CEP
+      </label>
+      <input class="form-control" id="cep" name="cep" type="text"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label " for="complemento">
+       Complemento
+      </label>
+      <input class="form-control" id="complemento" name="complemento" type="text"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label " for="cidade">
+       Cidade
+      </label>
+      <input class="form-control" id="cidade" name="cidade" type="text"/>
+     </div>
+     <div class="form-group ">
+      <label class="control-label " for="estado">
+       Estado
+      </label>
+      <input class="form-control" id="estado" name="estado" type="text"/>
+     </div>
+     <div class="form-group">
+      <div>
+       <button class="btn btn-primary " name="submit" type="submit">
+        Cadastrar
+       </button>
+      </div>
+     </div>
+    </form>
+   </div>
+  </div>
+ </div>
+</div>
+{% endblock %}
