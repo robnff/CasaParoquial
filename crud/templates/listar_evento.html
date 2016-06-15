@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	{% for evento in eventos %}
+		<div class="evento" >
+			<a href="/evento/{{ evento.id }}">
+				{{evento.titulo}}
+			</a>
+			<!--div class="profissao">{{membro.profissao}}</div>
+		</div>
+		<div class="email">{{membro.email}}</div !-->
+		</div>
+
+		{% empty %}
+			Não existe nenhum evento cadastrado com esse nome.
+		{% endfor %}
+</body>
+</html>

@@ -22,10 +22,10 @@
     <form method="post" data-toggle = "validator">
        	{% csrf_token %}
      <div class="form-group ">
-      <label class="control-label requiredField " for="local">
+      <label class="control-label " for="local">
        Local
       </label>
-      <select class="select form-control" id="local" name="local" required>
+      <select class="select form-control" id="local" name="local" value = "{{evento.local}}" required>
        <option value="outros">
         Outros
        </option>
@@ -40,25 +40,25 @@
       </span>
      </div>
      <div class="form-group ">
-      <label class="control-label requiredField " for="titulo" >
+      <label class="control-label " for="titulo" value = "{{evento.titulo}}" required>
        Titulo
       </label>
       <input class="form-control" id="titulo" name="titulo" type="text" required/>
      </div>
      <div class="form-group ">
-      <label class="control-label requiredField " for="inicio">
+      <label class="control-label " for="inicio">
        Inicio
       </label>
-      <input class="form-control" id="inicio" name="inicio" placeholder="MM/DD/YYYY HH:MM:SS" type="datetime-local" required/>
+      <input class="form-control" id="inicio" name="inicio" placeholder="MM/DD/YYYY HH:MM:SS" type="datetime-local"/>
      </div>
      <div class="form-group ">
-      <label class="control-label requiredField" for="fim">
+      <label class="control-label " for="fim">
        Fim
       </label>
-      <input class="form-control" id="datfime1" name="fim" placeholder="MM/DD/YYYY HH:MM:SS" type="datetime-local" required/>
+      <input class="form-control" id="datfime1" name="fim" placeholder="MM/DD/YYYY HH:MM:SS" type="datetime-local"/>
      </div>
      <div class="form-group ">
-      <label class="control-label " for="periodicidade">
+      <label class="control-label " for="periodicidade"  value= "{{evento.periodicidade}}">
        Periodicidade
       </label>
       <select class="select form-control" id="peridiocidade" name="peridiocidade">

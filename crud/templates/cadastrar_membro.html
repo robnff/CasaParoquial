@@ -26,26 +26,23 @@
  <div class="container-fluid">
   <div class="row">
    <div class="col-md-6 col-sm-6 col-xs-12">
-    <form method="post">
+    <form method="post" data-toggle = "validator">
       	{% csrf_token %}
 
      <div class="form-group ">
       <label class="control-label requiredField" for="nome">
        Nome Completo
-       <span class="asteriskField">
-        *
-       </span>
       </label>
-      <input class="form-control" id="nome" name="nome" type="text"/>
+      <input class="form-control" id="nome" name="nome" type="text" placeholder="Nome Sobrenome" required/>
      </div>
      <div class="form-group ">
-      <label class="control-label requiredField" for="data_nascimento">
+      <label class="control-label " for="data_nascimento">
        Data de Nascimento
       </label>
-      <input class="form-control" id="data_nascimento" name="data_nascimento" placeholder="DD/MM/AAAA" type="date"/>
+      <input class="form-control" id="data_nascimento" name="data_nascimento"  type="date" placeholder="DD/MM/AAAA"/>
      </div>
      <div class="form-group ">
-      <label class="control-label requiredField" for="sexo">
+      <label class="control-label " for="sexo">
        Sexo
       </label>
       <select class="select form-control" id="sexo" name="sexo">
@@ -83,7 +80,7 @@
       </select>
      </div>
      <div class="form-group ">
-      <label class="control-label requiredField" for="email">
+      <label class="control-label " for="email">
        Email
       </label>
       <input class="form-control" id="email" name="email" type="text"/>
@@ -167,19 +164,19 @@
       <label class="control-label " for="logradouro">
        Logradouro
       </label>
-      <input class="form-control" id="logradouro" name="logradouro" type="text"/>
+      <input class="form-control" id="logradouro" name="logradouro" type="text" placeholder="Nome da rua" required/>
      </div>
      <div class="form-group ">
       <label class="control-label " for="bairro">
        Bairro
       </label>
-      <input class="form-control" id="bairro" name="bairro" type="text"/>
+      <input class="form-control" id="bairro" name="bairro" type="text" placeholder="Nome do bairro" required/>
      </div>
      <div class="form-group ">
       <label class="control-label " for="endereco_num">
        N&uacute;mero
       </label>
-      <input class="form-control" id="endereco_num" name="endereco_num" type="text"/>
+      <input class="form-control" id="endereco_num" name="endereco_num" type="text" placeholder="Numero"  pattern="^[0-9]{1,}$" required/>
      </div>
      <div class="form-group ">
       <label class="control-label " for="cep">
@@ -197,13 +194,13 @@
       <label class="control-label " for="cidade">
        Cidade
       </label>
-      <input class="form-control" id="cidade" name="cidade" type="text"/>
+      <input class="form-control" id="cidade" name="cidade" type="text" placeholder="Nome da cidade " required/>
      </div>
      <div class="form-group ">
       <label class="control-label " for="estado">
        Estado
       </label>
-      <input class="form-control" id="estado" name="estado" type="text"/>
+      <input class="form-control" id="estado" name="estado" type="text" placeholder="Nome do Estado" required/>
      </div>
      <div class="form-group">
       <div>
