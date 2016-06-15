@@ -26,7 +26,7 @@
  <div class="container-fluid">
   <div class="row">
    <div class="col-md-6 col-sm-6 col-xs-12">
-    <form method="post">
+    <form method="post"  data-toggle = "validator">
       	{% csrf_token %}
 
      <div class="form-group ">
@@ -36,32 +36,45 @@
         *
        </span>
       </label>
-      <input class="form-control" id="nome" name="nome" type="text"/>
+      <input class="form-control" id="nome" name="nome" type="text" value = "{{membro.nome_comp}}" required />
      </div>
      <div class="form-group ">
       <label class="control-label requiredField" for="data_nascimento">
-       Data de Nascimento
+       Data de Nascimento 
       </label>
-      <input class="form-control" id="data_nascimento" name="data_nascimento" placeholder="DD/MM/AAAA" type="date"/>
+      <input class="form-control" id="data_nascimento" name="data_nascimento" placeholder="DD/MM/AAAA" type="date" value = "{{membro.data_nasc|date:'Y-m-d'}}" />
      </div>
      <div class="form-group ">
       <label class="control-label requiredField" for="sexo">
        Sexo
       </label>
-      <select class="select form-control" id="sexo" name="sexo">
-       <option value="Masculino">
-        Masculino
-       </option>
-       <option value="Feminino">
-        Feminino
-       </option>
+      <select class="select form-control" id="sexo" name="sexo" >
+        {% if membro.sexo == "Feminino" %}
+         <option value="Feminino" id = "Feminino" >
+          Feminino
+         </option>
+         <option value="Masculino" id="Masculino"  >
+          Masculino
+         </option>
+        {% endif %}
+        {% if membro.sexo == "Masculino" %}
+         <option value="Masculino" id = "Masculino" >
+          Masculino
+         </option>
+         <option value="Feminino" id="Feminino"  >
+          Feminino
+         </option>
+        {% endif %}
       </select>
      </div>
      <div class="form-group ">
       <label class="control-label " for="origem">
        Origem
       </label>
-      <select class="select form-control" id="origem" name="origem">
+      <select class="select form-control" id="origem" name="origem" >
+        <option  selected="selected" >
+          {{membro.origem}}
+        </option>
        <option value="cursilho">
         Cursilho
        </option>
@@ -86,19 +99,22 @@
       <label class="control-label requiredField" for="email">
        Email
       </label>
-      <input class="form-control" id="email" name="email" type="text"/>
+      <input class="form-control" id="email" name="email" type="text"  value = "{{membro.email}}" />
      </div>
      <div class="form-group ">
       <label class="control-label " for="profissao">
        Profissao
       </label>
-      <input class="form-control" id="profissao" name="profissao" type="text"/>
+      <input class="form-control" id="profissao" name="profissao" type="text" value = "{{membro.profissao}}"  />
      </div>
      <div class="form-group ">
       <label class="control-label " for="escolaridade">
        Escolaridade
       </label>
       <select class="select form-control" id="escolaridade" name="escolaridade">
+        <option  selected="selected" >
+          {{membro.escolaridade}}
+        </option>
        <option value="sem">
         N&atilde;o tem
        </option>
@@ -121,7 +137,7 @@
       </label>
       <div class=" ">
        <label class="checkbox-inline">
-        <input name="batizado" type="checkbox" value="batizado"/>
+        <input name="batizado" type="checkbox" value="batizado" checked ="{{membro.batizado}}" />
         Batizado
        </label>
       </div>
@@ -130,88 +146,91 @@
       <label class="control-label " for="data_batismo">
        Data de Batistmo
       </label>
-      <input class="form-control" id="data_batismo" name="data_batismo" placeholder="DD/MM/AAAA" type="date"/>
+      <input class="form-control" id="data_batismo" name="data_batismo" placeholder="DD/MM/AAAA" type="date" value = "{{membro.data_nasc|date:'Y-m-d'}}"/>
      </div>
      <div class="form-group ">
       <label class="control-label " for="data_confirmacao">
        Data de Confirma&ccedil;&atilde;o
       </label>
-      <input class="form-control" id="data_confirmacao" name="data_confirmacao" placeholder="DD/MM/AAAA" type="date"/>
+      <input class="form-control" id="data_confirmacao" name="data_confirmacao" placeholder="DD/MM/AAAA" type="date" value = "{{membro.data_conf|date:'Y-m-d'}}"/>
      </div>
      <div class="form-group ">
       <label class="control-label " for="nome_conjuge">
        Nome do Conjuge
       </label>
-      <input class="form-control" id="nome_conjuge" name="nome_conjuge" type="text"/>
+      <input class="form-control" id="nome_conjuge" name="nome_conjuge" type="text" value = "{{membro.conjuge}}" />
      </div>
      <div class="form-group ">
       <label class="control-label " for="nome_pai">
        Nome do Pai
       </label>
-      <input class="form-control" id="nome_pai" name="nome_pai" type="text"/>
+      <input class="form-control" id="nome_pai" name="nome_pai" type="text" value = "{{membro.pai}}"/>
      </div>
      <div class="form-group ">
       <label class="control-label " for="nome_mae">
        Nome da m&atilde;e
       </label>
-      <input class="form-control" id="nome_mae" name="nome_mae" type="text"/>
+      <input class="form-control" id="nome_mae" name="nome_mae" type="text" value = "{{membro.mae}}"/>
      </div>
      <div class="form-group ">
       <label class="control-label " for="data_casamento">
        Data de Casamento
       </label>
-      <input class="form-control" id="data_casamento" name="data_casamento" placeholder="DD/MM/AAAA" type="date"/>
-      
+      <input class="form-control" id="data_casamento" name="data_casamento" placeholder="DD/MM/AAAA" type="date" value = "{{membro.data_casamento|date:'Y-m-d'}}"/>
      </div>
      <div class="form-group ">
       <label class="control-label " for="logradouro">
        Logradouro
       </label>
-      <input class="form-control" id="logradouro" name="logradouro" type="text"/>
+      <input class="form-control" id="logradouro" name="logradouro" type="text" value = "{{membro.endereco.logradouro}}" required/>
      </div>
      <div class="form-group ">
       <label class="control-label " for="bairro">
        Bairro
       </label>
-      <input class="form-control" id="bairro" name="bairro" type="text"/>
+      <input class="form-control" id="bairro" name="bairro" type="text" value = "{{membro.endereco.bairro}}" required/>
      </div>
      <div class="form-group ">
       <label class="control-label " for="endereco_num">
        N&uacute;mero
       </label>
-      <input class="form-control" id="endereco_num" name="endereco_num" type="text"/>
+      <input class="form-control" id="endereco_num" name="endereco_num" type="text" value = "{{membro.endereco.numero}}" pattern="^[0-9]{1,}$" required/>
      </div>
      <div class="form-group ">
       <label class="control-label " for="cep">
        CEP
       </label>
-      <input class="form-control" id="cep" name="cep" type="text"/>
+      <input class="form-control" id="cep" name="cep" type="text" value = "{{membro.endereco.cep}}" required/>
      </div>
      <div class="form-group ">
       <label class="control-label " for="complemento">
        Complemento
       </label>
-      <input class="form-control" id="complemento" name="complemento" type="text"/>
+      <input class="form-control" id="complemento" name="complemento" type="text" value = "{{membro.endereco.complemento}}" />
      </div>
      <div class="form-group ">
       <label class="control-label " for="cidade">
        Cidade
       </label>
-      <input class="form-control" id="cidade" name="cidade" type="text"/>
+      <input class="form-control" id="cidade" name="cidade" type="text" value = "{{membro.endereco.cidade}}" required/>
      </div>
      <div class="form-group ">
       <label class="control-label " for="estado">
        Estado
       </label>
-      <input class="form-control" id="estado" name="estado" type="text"/>
+      <input class="form-control" id="estado" name="estado" type="text" value = "{{membro.endereco.estado}}" required/>
      </div>
      <div class="form-group">
       <div>
-       <button class="btn btn-primary " name="submit" type="submit">
+       <button class="btn btn-primary " name="saveSelect" type="submit" >
         Salvar
+       </button>
+        <button class="btn btn-primary " name="deleteSelect" type="submit">
+        deletar Membro
        </button>
       </div>
      </div>
+     </div>    
     </form>
    </div>
   </div>

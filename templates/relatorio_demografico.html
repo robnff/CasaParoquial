@@ -1,0 +1,80 @@
+{% extends "index.html" %}
+{% block css %}
+  {% load static %}
+  <link href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+{% endblock %}
+{% block cadastro %}
+<!--<form method='POST'>
+	{% csrf_token %}
+		<label for='nome' >Name</label><input id='nome' name='nome' type='text'/><br/>
+		<label for='num_proc' >Process Number</label><input id='num_proc'name='num_proc' type = 'text'/><br/>
+		<label for='periodo' >Limit date</label><input id='periodo'name='periodo' type = 'date'/><br/>
+		<label for='cidade' >City</label><input id='cidade'name='cidade' type = 'text'/><br/>
+		<label for='senha' >Password</label><input id='senha'name='senha' type = 'password'/><br/>
+		
+		<input type='submit'/>
+	</form>-->
+  
+  <!-- Special version of Bootstrap that only affects content wrapped in .bootstrap-iso -->
+<link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" /> 
+
+<!-- Inline CSS based on choices in "Settings" tab -->
+<style>.bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form{font-family: Arial, Helvetica, sans-serif; color: black}.bootstrap-iso form button, .bootstrap-iso form button:hover{color: white !important;} .asteriskField{color: red;}</style>
+
+<!-- HTML Form (wrapped in a .bootstrap-iso div) -->
+<div class="bootstrap-iso">
+ <div class="container-fluid">
+  <div class="row">
+   <div class="col-md-6 col-sm-6 col-xs-12">
+    <form method="post" data-toggle = "validator">
+      	{% csrf_token %}
+	 <div class="form-group ">
+      <label class="control-label " for="sexo">
+       Sexo
+      </label>
+      <select class="select form-control" id="sexo" name="sexo">
+       <option value="Masculino">
+        Masculino
+       </option>
+       <option value="Feminino">
+        Feminino
+       </option>
+      </select>
+     </div>
+     <div class="form-group ">
+      <label class="control-label requiredField" for="faixa_etaria">
+       Faixa etária 
+      </label>
+      <p> 
+        <input class="form-control" id="faixa_inicio" name="faixa_inicio" type="text" placeholder="inicio" required/>
+      </p>
+      <p>
+         a
+      </p> 
+      <p> 
+      <input class="form-control" id="faixa_fim" name="faixa_fim" type="text" placeholder="fim" required/>
+      </p> 
+     </div>
+      <div class="form-group" id="div_casamento">
+      <label class="control-label " for="estado_civil">
+      </label>
+      <div class=" ">
+       <label class="checkbox-inline">
+        <input name="estado_civil" type="checkbox" value="estado_civil"/>
+        Casado(a)
+       </label>
+      </div>
+     </div>
+      <div class="form-group">
+      <div>
+       <button class="btn btn-primary " name="submit" type="submit">
+        Gerar
+       </button>
+      </div>
+       </div>
+    </form>
+   </div>
+  </div>
+ </div>
+</div>
+{% endblock %}

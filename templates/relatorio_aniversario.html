@@ -18,41 +18,22 @@
    <div class="col-md-6 col-sm-6 col-xs-12">
     <form method="post" data-toggle = "validator">
       	{% csrf_token %}
-
-    <div class="form-group ">
-      <label class="control-label requiredField" for="inicio">
-       Data do Evento
+    <h2> Escolha um periodo </h2>
+    <div class="form-group requiredField">
+      <label class="control-label requiredField" for="data">
+       Data de inicio 
       </label>
-      <input class="form-control" id="inicio" name="inicio" placeholder="DD/MM/AAAA" type="date" required />
+      <input class="form-control" id="data" name="data" placeholder="DD/MM/AAAA - DD/MM/AAAA" type="date" required />
      </div>
-      <div class="form-group" id="div_batizado">
-      <label class="control-label " for="betania">
-      </label>
-      <div class=" ">
-       <label class="checkbox-inline">
-        <input name="betania" type="checkbox" value="betania"/>
-        Apenas eventos da Catedral Betania
-       </label>
-      </div>
-     </div>
-     <div class="form-group ">
-      <div class=" ">
-       <div class="checkbox">
-        <label class="checkbox">
-         <input name="checkbox" type="checkbox" value="divulgado"/>
-         Apenas eventos divulgados no boletim
-        </label>
-       </div>
-      </div>
-     </div>
-     <div class="form-group">
+      <div class="form-group">
       <div>
+       <input name="_honey" style="display:none" type="text"/>
        <button class="btn btn-primary " name="submit" type="submit">
-        Pesquisar
+        Gerar
        </button>
       </div>
      </div>
-    </form>
+     </form>
    </div>
   </div>
  </div>
