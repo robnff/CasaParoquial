@@ -14,22 +14,23 @@ class Endereco(models.Model):
 
 class Membro (models.Model):
 	listaGenero = (('mas','masculino'),('fem','feminino'),('out', 'outro'))
-	listaEscolar = (('fund','fundamental completo'),('medio', 'medio completo'),('super','superior completo'))
-
-	#escolaridade = models.CharField(max_length=5, choices=listaGenero)
-	batizado = models.BooleanField(choices=((True,'Sim'),(False,'Nao')))
-	data_casamento = models.DateField()
-	conjuge = models.CharField(max_length=50)
-	profissao = models.CharField(max_length=50)
-	#origem =
-	pai = models.CharField(max_length=50)
-	mae = models.CharField(max_length=50)
-	data_nasc = models.DateField()
+	listaEscolar = (('sem','Não tem'),('fund','Fundamental'),('medio', 'Médio'),('super','Superior'),('pos','Pós-graduado'))
+	listaOrigem=(('Cursilho','cursilho'),('Lado a Lado','lado a lado'),('Discipulado','discipulado'),('Transf outra comunidade','transf outra comunidade'),('Olímpiadas','olimpiadas'),('Outros','outros'))
+	batizado = models.BooleanField(choices=((True,'Sim'),(False,'Nao')),blank=True)
+	origem = models.CharField(max_length=6,choices=listaOrigem,blank=True)
+	data_casamento = models.DateField(null=True,blank=True)
+	conjuge = models.CharField(max_length=50,blank=True)
+	profissao = models.CharField(max_length=50,blank=True)
+	escolaridade = models.CharField(max_length=5,choices=listaEscolar,blank=True)
+	pai = models.CharField(max_length=50,blank=True)
+	mae = models.CharField(max_length=50,blank=True)
+	data_nasc = models.DateField(null=True,blank=True)
 	nome_comp = models.CharField(max_length=50)
-	data_conf = models.DateField()
-	sexo = models.CharField(max_length=3, choices=listaGenero)
-	email = models.CharField(max_length=30)
+	data_conf = models.DateField(null=True,blank=True)
+	sexo = models.CharField(max_length=3, choices=listaGenero,blank=True)
+	email = models.CharField(max_length=30,blank=True)
 	endereco = models.ForeignKey(Endereco, related_name='endereco')
+	data_batizado = models.DateField(null=True,blank=True)
 	
 
 class Telefone(models.Model):
@@ -48,14 +49,16 @@ class Filho(models.Model):
 	genitor = models.ForeignKey(Membro, related_name='progenitor')
 
 class Evento(models.Model):
-	local = models.CharField(max_length=50)
+	listaPeriodos = (('uma', 'uma vez'),('semanalmente','semanalmente'), ('quinzenal', 'quizenal'), ('mensal', 'mensal'))
+	listaLocais = (('canaa', 'Canaã'),('betania','Catedral Betânia'), ('outros', 'Outros'))
+	local = models.CharField(max_length=5,choices=listaLocais,blank=True)
 	titulo = models.CharField(max_length=50)
 	inicio = models.DateTimeField()
 	fim = models.DateTimeField()
-	#periodicidade =
+	peridiocidade = models.CharField(max_length=5,choices=listaPeriodos,blank=True)
 	ser_divulgado = models.BooleanField()
 	responsavel = models.ForeignKey(Membro, related_name='responsavel')
-	secretario = models.ForeignKey(Secretario, related_name='marcou')
+	secretario = models.ForeignKey(Secretario, related_name='secretario')
 
 class Aconselhamento(models.Model):
 	inicio = models.DateTimeField()
@@ -64,10 +67,12 @@ class Aconselhamento(models.Model):
 	secretario = models.ForeignKey(Secretario, related_name='agendou')
 	lider = models.ForeignKey(Lider_religioso, related_name='lider_religioso')
 	aconselhado = models.ForeignKey(Membro, related_name='aconselhado')
-
+	
 class Pertence_ministerio(models.Model):
-	ministerio = models.CharField(max_length=50)
+	ministerio = models.IntegerField(choices=((1,'Cursilho'),(2, 'Mentoria de casais'),(3, 'Discipulado'),(4, 'Seminário de vida'),(5,'Olimpíadas')))
 	pertencente = models.ForeignKey(Membro, related_name='cargo')
 	#fez, trabalha ou lidera
-	funcao = models.CharField(max_length=50)
+	funcao = models.IntegerField(choices=((1,'fez'),(2, 'trabalha'),(3, 'lidera')))
 
+class Mymodel(models.Model):
+	photo = models.ImageField("somename",upload_to="images/")

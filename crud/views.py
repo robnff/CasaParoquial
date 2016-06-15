@@ -9,6 +9,10 @@ from .forms import AdicionarMembro
 from crud.models import Endereco
 from crud.models import Membro, Secretario, Lider_religioso, Aconselhamento, Evento
 from django.shortcuts import get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
+
+
+#dict_mes = {'January':01,'February':02,'March':03,'April':04,'May':05,'June':06,'July':07,'August':08,'September':09,'October':10, 'November':11,'December':12}
 def home(request):
     if request.method == 'POST':
         username = request.POST['login']
@@ -29,6 +33,8 @@ def cadastrar_membro(request):
         # membro
         nome = request.POST['nome']
         data_nascimento = request.POST['data_nascimento']
+        if(data_nascimento==''):
+            data_nascimento= None
         sexo = request.POST['sexo']
         # origem = request.POST['origem']
         email = request.POST['email']
@@ -42,11 +48,17 @@ def cadastrar_membro(request):
         
         print(batizado)
         data_batismo = request.POST['data_batismo']
+        if(data_batismo==''):
+            data_batismo= None
         data_confirmacao = request.POST['data_confirmacao']
+        if(data_confirmacao==''):
+            data_confirmacao= None
         nome_conjuge = request.POST['nome_conjuge']
         nome_pai = request.POST['nome_pai']
         nome_mae = request.POST['nome_mae']
         data_casamento = request.POST.get('data_casamento')
+        if(data_casamento==''):
+            data_casamento= None
         origem = request.POST.get('origem')
         # endereco
         print(origem)
@@ -65,7 +77,8 @@ def cadastrar_membro(request):
         except Endereco.DoesNotExist:
             endereco = None
             # other code that handles missin
-            
+        except :
+           return render(request, 'erro_endereco.html', {})
         if endereco == None:
             # cria primeiro o endereco
             new_endereco = Endereco.objects.create(
@@ -94,7 +107,7 @@ def cadastrar_membro(request):
             endereco = Endereco.objects.get(cep=cep, logradouro=logradouro, numero=numero)
         )
         
-        return render(request, 'cadastrar_membro.html', {})
+        return render(request, 'membro_cadastro_sucesso.html', {})
 
     else:
         return render(request, 'cadastrar_membro.html')
@@ -176,43 +189,182 @@ def login_user2(request):
 
     return render(request, 'index.html', {})
 
+def deslog (request) :
+    return render(request, 'login.html', {})
+
+@csrf_exempt
 def consulta_membro(request):
     if request.method == 'POST':
         #exibir lista
         partenome = request.POST['nome']
         membros =  Membro.objects.filter(nome_comp__contains=partenome)
-        data_to_plot={}
+
+        context = {'membros': membros}
         if(len(membros)==0):
-            return render(request, 'membro_nao_existe.html', {})
+            return render(request, 'membro_nao_existe.html',{})
         else:
-            #for i in range(len(Membro)):
-            print('MEMBROS ',membros)
-        #falta passar a lista pra uma pag e exibir la, mas ta pegando ela pelo menos :) 
+            for m in (membros):
+                print('antess ',m.origem, type(m.origem))
+                #datetime.strptime(((m.data_nasc).strftime('%d/%m/%Y'))
+            return render(request, 'listar_membro.html', context)
     else:
         return render(request, 'consultar_membro.html', {})
 
+@csrf_exempt
 def consultar_evento(request):
     if request.method == 'POST':
         #exibir lista
         evento_inicio = request.POST['inicio']
         eventos =  Evento.objects.filter(inicio=evento_inicio)
+        if 'betania' in request.POST:
+            eventos = eventos.filter(local='betania')
+
+        if 'divulgado' in request.POST:
+            eventos = eventos.filter(ser_divulgado=True)
+
+        context = {'eventos': eventos}
         if(len(eventos)==0):
             return render(request, 'evento_nao_existe.html', {})
         else:
-            print('eventos ',eventos)
-        #falta passar a lista pra uma pag e exibir la, mas ta pegando ela pelo menos :) 
+            return render (request, 'listar_eventos.html', context)
     else:
         return render(request, 'consultar_evento.html', {})
 
+@csrf_exempt
+def consultar_evento_nome(request):
+    if request.method == 'POST':
+        #exibir lista
+        evento_titulo = request.POST['titulo']
+        eventos =  Evento.objects.filter(titulo__contains=evento_titulo)
+        context = {'eventos': eventos}
+        if(len(eventos)==0):
+            return render(request, 'evento_nome_nao_existe.html', {})
+        else:
+            return render (request, 'listar_eventos.html', context)
+    else:
+        return render(request, 'consultar_evento_nome.html', {})
+
+@csrf_exempt
 def consultar_aconselhamento(request):
     if request.method == 'POST':
         #exibir lista
         aconselhamento_inicio = request.POST['inicio']
         aconselhamentos = Aconselhamento.objects.filter(inicio=aconselhamento_inicio)
-        if(len(aconselhamentos)==0):
+        context = {'aconselhamentos':aconselhamentos}
+        if(len(aconselhamentos )==0):
             return render(request, 'aconselhamento_nao_encontrado.html', {})
         else:
-            print('aconselhamentos ',aconselhamentos)
-        #falta passar a lista pra uma pag e exibir la, mas ta pegando ela pelo menos :) 
+            return render(request, 'listar_aconselhamentos', context)
     else:
         return render(request, 'consultar_aconselhamento.html', {})
+
+def editar_membro(request, membro_id):
+    membro = Membro.objects.get(id=membro_id)
+    endereco = Endereco.objects.get(id=membro.endereco_id)
+    if request.method == 'POST':
+        #pegar tds os dados do form aqui
+        if 'saveSelect' in request.POST:
+            nome = request.POST['nome']
+            data_nascimento = request.POST['data_nascimento']
+            sexo = request.POST['sexo']
+            # origem = request.POST['origem']
+            email = request.POST['email']
+            profissao = request.POST['profissao']
+            escolaridade = request.POST.get('escolaridade')
+            batizado = request.POST.get('batizado')
+            if batizado == None:
+                batizado = False
+            else:
+                batizado = True    
+            data_batismo = request.POST['data_batismo']
+            data_confirmacao = request.POST['data_confirmacao']
+            nome_conjuge = request.POST['nome_conjuge']
+            nome_pai = request.POST['nome_pai']
+            nome_mae = request.POST['nome_mae']
+            data_casamento = request.POST.get('data_casamento')
+            origem = request.POST.get('origem')
+            # endereco 
+            logradouro = request.POST['logradouro']
+            bairro = request.POST['bairro']
+            numero = request.POST['endereco_num']
+            cep = request.POST['cep']
+            complemento = request.POST['complemento']
+            estado = request.POST['estado']
+            cidade = request.POST['cidade']
+
+            membro.batizado = batizado
+            membro.origem = origem
+            #membro.data_casamento = data_casamento
+            membro.conjuge = nome_conjuge
+            membro.profissao = profissao
+            membro.pai = nome_pai
+            membro.mae = nome_pai
+            #membro.data_nasc = data_nascimento
+            membro.nome_comp = nome
+            #membro.data_conf = data_confirmacao
+            membro.sexo = sexo
+            membro.email = email
+            membro.escolaridade = escolaridade
+            endereco.logradouro = logradouro
+            endereco.bairro = bairro
+            endereco.numero = numero
+            endereco.cep = cep
+            endereco.complemento = complemento
+            endereco.estado = estado
+            endereco.cidade = cidade
+            endereco.save()
+            membro.save()
+            return render(request, 'alteracao_sucesso.html', {})
+        elif ('deleteSelect' in request.POST): 
+            membro = Membro.objects.get(id=membro_id)
+            membro.delete()
+            return render(request, 'membro_deletado.html', {})
+    else:
+        #caso dê pau e precise do endereço separado
+        #endereco = Endereco.objects.get(id=membro.endereco)
+        #context = {'membro':membro, 'endereco':endereco}
+        context = {'membro':membro}
+        return render(request, 'editar_membro.html', context)
+
+@csrf_exempt
+def relatorio_aniversario(request):
+    if request.method == 'POST':
+        #exibir lista
+        dia_aniv = request.POST['data']
+        anivs =  Membro.objects.filter((data_nasc.isocalendar()[1]==dia_aniv.isocalendar()[1]) and (data_nasc.isocalendar()[0] == dia_aniv.isocalendar()[0]))
+        context = {'anivs': anivs}
+        if(len(anivs)==0):
+            return render(request, 'sem_aniversarios.html',{})
+        else:
+            return render(request, 'listar_membro.html', context)
+    else:
+        return render(request, 'relatorio_aniversario.html', {})
+
+def editar_evento(request, evento_id):
+    evento = Evento.objects.get(id=evento_id)
+    if request.method == 'POST':
+         evento.secretario = request.POST('secretario')
+         evento.responsavel =  request.POST('responsavel')
+         evento.data_inicio = request.POS('inicio')
+         evento.data_fim = request.POST('fim')
+         evento.peridiocidade = request.POST('peridiocidade')
+         evento.divulgado = request.POST('divulgado')
+         evento.local = request.POST('local') 
+         evento.titulo = request.POST('titulo')
+         evento.save()
+         return render(request, 'index.html', {})
+    else:
+        #caso dê pau e precise do endereço separado
+        #endereco = Endereco.objects.get(id=membro.endereco)
+        #context = {'membro':membro, 'endereco':endereco}
+        context = {'evento':evento}
+        return render(request, 'editar_evento.html', context)
+
+def relatorio_ministerio (request):
+     return render(request, 'relatorio_ministerio.html', {})
+
+
+def relatorio_demografico (request):
+     return render(request, 'relatorio_demografico.html', {})   
+
+
